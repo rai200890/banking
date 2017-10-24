@@ -1,0 +1,6 @@
+SQLAlchemy==1.1.14
+psycopg2==2.7.3.1
+Flask==0.12.2
+Flask-SQLAlchemy==2.3.1
+Flask-Migrate==2.1.1
+python-decouple==3.1
