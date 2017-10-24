@@ -10,8 +10,8 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = config("SQLALCHEMY_DATABASE_URI")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = config("SQLALCHEMY_TRACK_MODIFICATIONS", cast=bool, default=False)
     app.config["DEBUG"] = config("DEBUG", cast=bool)
+    from banking.models.event import Event
     db.init_app(app)
-    migrate = Migrate(app, db)
 
     @app.route("/")
     def hello():

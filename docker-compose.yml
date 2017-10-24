@@ -1,6 +1,9 @@
 version: "3"
 services:
   web:
+    environment:
+       - LC_ALL=C.UTF-8
+       - LANG=C.UTF-8
     env_file: .env
     build: .
     depends_on:
