@@ -1,6 +1,7 @@
 version: "3"
 services:
   web:
+    container_name: banking-web
     environment:
        - LC_ALL=C.UTF-8
        - LANG=C.UTF-8
@@ -16,8 +17,9 @@ services:
       - 3000:3000
     volumes:
       - .:/code
-    command: /bin/bash -c "python3 run.py"
+    command: /bin/bash -c "FLASK_APP=run.py python -m flask run --port 3000 --host 0.0.0.0"
   db:
+    container_name: banking-db
     image: postgres:10.0
     ports:
       - 5432:5432
