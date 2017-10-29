@@ -6,3 +6,5 @@ install:
 script:
   - python -m pytest
   - python -m flake8
+after_success:
+  - coveralls
