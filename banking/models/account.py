@@ -20,6 +20,9 @@ class Account(db.Model):
         ],
         deprecated=["md5_crypt"]
     ), nullable=False, index=True)
+    version = db.Column(db.Integer, default=0)
     initial_balance = db.Column(CurrencyType, nullable=False)
     client_id = db.Column(db.Integer, db.ForeignKey("client.id"), nullable=False)
     agency_id = db.Column(db.Integer, db.ForeignKey("agency.id"), nullable=False)
+    client = db.relationship("Client", back_populates="accounts")
+    agency = db.relationship("Agency", back_populates="accounts")

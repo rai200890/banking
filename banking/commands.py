@@ -9,6 +9,7 @@ Migrate(app, db)
 
 @app.cli.command()
 def seed():
-    EventType.create(name="CreateAccount", entity="Client")
-    EventType.create(name="WithdrawMoney", entity="Account")
-    EventType.create(name="DepositMoney", entity="Account")
+    db.session.add(EventType(name="CreateAccount", entity="Client"))
+    db.session.add(EventType(name="WithdrawMoney", entity="Account"))
+    db.session.add(EventType(name="DepositMoney", entity="Account"))
+    db.session.commit()
