@@ -20,5 +20,5 @@ def create_app():
     db.init_app(app)
     from .api.blueprint import api
     app.register_blueprint(api)
-    swagger = Swagger(app)
+    Swagger(app)
     return app

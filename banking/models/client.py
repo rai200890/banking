@@ -1,4 +1,4 @@
-from sqlalchemy_utils.types.phone_number import PhoneNumber
+from ..app import db
 
 
 class Client(db.Model):

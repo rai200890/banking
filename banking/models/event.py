@@ -12,9 +12,10 @@ class Event(db.Model):
         "polymorphic_on": type
     }
 
+
 class AccountEvent(db.Model):
     __tablename__ = "account_event"
-    id = db.Column(Integer, db.ForeignKey("event.id"), primary_key=True)
+    id = db.Column(db.Integer, db.ForeignKey("event.id"), primary_key=True)
 
     __mapper_args__ = {
         "polymorphic_identity": "event"
@@ -23,7 +24,7 @@ class AccountEvent(db.Model):
 
 class TransferEvent(db.Model):
     __tablename__ = "transfer_event"
-    id = db.Column(Integer, db.ForeignKey("event.id"), primary_key=True)
+    id = db.Column(db.Integer, db.ForeignKey("event.id"), primary_key=True)
 
     __mapper_args__ = {
         "polymorphic_identity": "event"

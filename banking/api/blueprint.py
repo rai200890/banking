@@ -11,8 +11,8 @@ api = Blueprint("API", "api")
 
 
 api.add_url_rule("/api/healthcheck",
-             view_func=HealthcheckResource.as_view("healthcheck"),
-             methods=["GET"])
+                 view_func=HealthcheckResource.as_view("healthcheck"),
+                 methods=["GET"])
 api.add_url_rule("/api/accounts",
                  view_func=AccountResource.as_view("post_accounts"),
                  methods=["POST"])

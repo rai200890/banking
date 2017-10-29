@@ -1,4 +1,4 @@
-from sqlalchemy_utils import PhoneNumber, PasswordType, CurrencyType
+from sqlalchemy_utils import PasswordType, CurrencyType
 
 from ..app import db
 

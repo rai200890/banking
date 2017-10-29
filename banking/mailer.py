@@ -9,7 +9,7 @@ def create_email_server():
     server.starttls()
     server.login(config("EMAIL_ADDRESS"), config("EMAIL_PASSWORD"))
     return server
-    
+
 
 # msg = "YOUR MESSAGE!"
 # server.sendmail("YOUR EMAIL ADDRESS", "THE EMAIL ADDRESS TO SEND TO", msg)

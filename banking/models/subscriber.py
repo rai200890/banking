@@ -1,5 +1,7 @@
 from sqlalchemy_utils import EmailType
 
+from ..app import db
+
 
 class Subscriber(db.Model):
     id = db.Column(db.Integer, primary_key=True)
