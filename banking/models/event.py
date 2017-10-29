@@ -1,31 +1,16 @@
 from ..app import db
 
 
-class Event(db.Model):
+class EventType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False, index=True)
-    type = db.Column(db.String(80), unique=True, nullable=False, index=True)
+    entity = db.Column(db.String(80), unique=True, nullable=False, index=True)
+    events = db.relationship("Events", back_populates="event_type")
+
+
+class Event(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    entity_id = db.Column(db.Integer, nullable=False)
     version = db.Column(db.Integer, nullable=False, index=True, default=0)
-    parameters = db.Column(db.JSON, nullable=False, index=True)
-    __mapper_args__ = {
-        "polymorphic_identity": "event",
-        "polymorphic_on": type
-    }
-
-
-class AccountEvent(db.Model):
-    __tablename__ = "account_event"
-    id = db.Column(db.Integer, db.ForeignKey("event.id"), primary_key=True)
-
-    __mapper_args__ = {
-        "polymorphic_identity": "event"
-    }
-
-
-class TransferEvent(db.Model):
-    __tablename__ = "transfer_event"
-    id = db.Column(db.Integer, db.ForeignKey("event.id"), primary_key=True)
-
-    __mapper_args__ = {
-        "polymorphic_identity": "event"
-    }
+    parameters = db.Column(db.JSON, nullable=False)
+    event_type_id = db.Column(db.Integer, db.ForeignKey("event_type.id"), nullable=False)
