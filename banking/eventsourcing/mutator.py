@@ -1,30 +1,19 @@
-from ..app import db
-from ..models import Account
+from ..app import logger
+from ..services.account import AccountCommand
 
 
-class GenericMutator(object):
+class AccountMutator(object):
 
-    def __init__(self, entity_type, entity_id=None):
-        self.entity_id = entity_id
-        self.entity_type = entity_type
+    SUPPORTED_ACTIONS = ["create", "deposit", "withdraw"]
 
-    def apply(self):
-        pass
-
-
-class AccountMutator(GenericMutator):
-    def __init__(self, entity_type=Account, entity_id=None):
-        super(AccountMutator, self).__init__(self, entity_type, entity_id)
-
-    def apply(self):
-        if self.event.event_type.name == "CreateAccount":
-            entity = self.entity_type()
-            entity.initial_balance = self.event.parameters.initial_balance
-            entity.password = self.event.parameters.password
-
-        # TODO: Não sei se faz sentido persistir a versão na entidade
-        entity.version += 1
-        db.session.add(entity)
-        db.session.commit()
-
-        return entity
+    @classmethod
+    def apply(cls, event, entity):
+        event_name = event.event_type.name
+        try:
+            if event_name in cls.SUPPORTED_EVENTS:
+                action = getattr(AccountCommand, event_name)
+                entity = action(entity=entity, params=event.parameters)
+                return entity
+            raise Exception("Unsupported event {} for account".format(event_name))
+        except Exception as e:
+            logger.error(e)

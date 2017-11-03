@@ -1,12 +1,31 @@
-from flask import Flask
+import logging
+from logging.config import fileConfig
+from os import getcwd
+
+from flask import Flask, g
 from flask_sqlalchemy import SQLAlchemy
 from decouple import config
 from flasgger import Swagger
+from werkzeug.local import LocalProxy
 
 db = SQLAlchemy()
 
+logger = logging.getLogger()
+
+
+def get_event_store():
+    from .eventsourcing.store import EventStore
+    event_store = getattr(g, "_event_store", None)
+    if event_store is None:
+        event_store = g._event_store = EventStore
+
+
+event_store = LocalProxy(get_event_store)
+
 
 def create_app():
+    fileConfig(config("LOG_CONFIG",
+               default="{}/banking/conf/logging.default.cfg".format(getcwd())))
     app = Flask(__name__)
     app.config["SQLALCHEMY_DATABASE_URI"] = config("SQLALCHEMY_DATABASE_URI")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = config("SQLALCHEMY_TRACK_MODIFICATIONS",

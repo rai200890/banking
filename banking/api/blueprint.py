@@ -2,7 +2,6 @@ from flask import Blueprint
 
 from .healthcheck import HealthcheckResource
 from .accounts import AccountResource
-from .clients import ClientResource
 from .subscriptions import SubscriptionResource
 from .transactions import TransactionResource
 
@@ -19,10 +18,7 @@ api.add_url_rule("/api/accounts",
 api.add_url_rule("/api/accounts/<account_id>/transactions",
                  view_func=TransactionResource.as_view("transactions"),
                  methods=["GET", "POST"])
-api.add_url_rule("/api/clients",
-                 view_func=ClientResource.as_view("clients"),
-                 methods=["GET", "POST"])
-api.add_url_rule("/api/clients/<client_id>/accounts",
+api.add_url_rule("/api/accounts",
                  view_func=AccountResource.as_view("get_accounts"),
                  methods=["GET"])
 api.add_url_rule("/api/subscriptions",
