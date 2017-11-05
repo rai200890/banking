@@ -10,4 +10,5 @@ python-decouple==3.1
 celery==4.1.0
 redis==2.10.6
 passlib==1.7.1
-marshmallow==2.14.0 
+marshmallow==2.14.0
+webargs==1.8.1

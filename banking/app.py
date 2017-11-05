@@ -17,7 +17,7 @@ def get_event_store():
     from .eventsourcing.store import EventStore
     event_store = getattr(g, "_event_store", None)
     if event_store is None:
-        event_store = g._event_store = EventStore
+        event_store = g._event_store = EventStore()
 
 
 event_store = LocalProxy(get_event_store)
@@ -38,7 +38,7 @@ def create_app():
         "specs_route": "/api/docs/"
     }
     db.init_app(app)
-    from .api.blueprint import api
-    app.register_blueprint(api)
+    from .resources import blueprint
+    app.register_blueprint(blueprint)
     Swagger(app)
     return app
