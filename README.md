@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/rai200890/banking.svg?branch=master)](https://travis-ci.org/rai200890/banking)
 [![Coverage Status](https://coveralls.io/repos/github/rai200890/banking/badge.svg)](https://coveralls.io/github/rai200890/banking)
+[![Dependency Status](https://gemnasium.com/badges/github.com/rai200890/banking.svg)](https://gemnasium.com/github.com/rai200890/banking)
 
 Simple banking REST API using Event Sourcing. Application was built using [Flask](https://flask.pocoo.org) and [SQLAlchemy](https://sqlalchemy.org).
 
