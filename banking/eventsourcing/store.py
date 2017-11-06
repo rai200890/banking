@@ -1,6 +1,10 @@
 # encoding: utf-8
-from .models import Subscriber, Event, EventType
-from .models import db
+from ..services.event import EventQuery
+from ..services.subscriber import (
+    SubscriberQuery,
+    SubscriberEventCommand
+)
+from ..app import db
 
 
 def notify_by_email(email):
@@ -9,23 +13,29 @@ def notify_by_email(email):
 
 class EventStore(object):
 
-    def get_events(self, entity_type, entity_id):
-        return Event.query.filter(EventType.name == entity_type,
-                                  Event.entity_id == entity_id).all()
+    def __init__(self, entity_name):
+        self.entity_name = entity_name
+
+    def get_events(self, entity_id):
+        return EventQuery.filter_by(entity_name=self.entity_name,
+                                    entity_id=entity_id)
+
+    def get_subscribers(self, event):
+        return SubscriberQuery.filter_by(event_name=event.event_type.name,
+                                         entity_name=self.entity_name)
 
     def publish(self, event):
         db.session.add(event)
-        db.commit()
-        subscribers = Subscriber.query.\
-            find_by(event_type_id=event.event_type.id).all()
-        for subscriber in subscribers:
+        db.session.commit()
+        for subscriber in self.get_subscribers(event):
             notify_by_email(subscriber.email)
 
-    def subscribe(self, subscriber):
-        db.session.add(subscriber)
-        db.commit()
+    def subscribe(self, event_name, subscriber_id):
+        return SubscriberEventCommand.create(event_name=event_name,
+                                             subscriber_id=subscriber_id,
+                                             entity_name=self.entity_name)
 
-    @classmethod
-    def unsubscribe(self, subscriber_id):
-        db.query.filter_by(id=subscriber_id).delete()
-        db.commit()
+    def unsubscribe(self, subscriber_id, event_name):
+        return SubscriberEventCommand.delete(event_name=event_name,
+                                             entity_name=self.entity_name,
+                                             subscriber_id=subscriber_id)

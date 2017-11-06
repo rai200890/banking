@@ -1,4 +1,4 @@
-from sqlalchemy.orm import column_property
+# from sqlalchemy.orm import column_property
 from sqlalchemy_utils import PasswordType, CurrencyType
 
 from ..app import db

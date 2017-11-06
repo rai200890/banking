@@ -10,7 +10,7 @@ class AccountMutator(object):
     def apply(cls, event, entity):
         event_name = event.event_type.name
         try:
-            if event_name in cls.SUPPORTED_EVENTS:
+            if event_name in cls.SUPPORTED_ACTIONS:
                 action = getattr(AccountCommand, event_name)
                 entity = action(entity=entity, params=event.parameters)
                 return entity

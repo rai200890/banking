@@ -2,13 +2,14 @@
 from functools import reduce
 
 from .mutator import AccountMutator
+from .store import EventStore
 from ..services.account import AccountQuery
 
 
 class AccountRepository(object):
 
-    def __init__(self, event_store):
-        self.event_store = event_store
+    def __init__(self):
+        self.event_store = EventStore("Account")
         self.mutator = AccountMutator()
 
     def handle_event(self, event, entity_id=None):

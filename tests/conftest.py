@@ -4,6 +4,7 @@ from decouple import config
 
 from banking.app import create_app, db as _db
 
+
 _app = create_app()
 
 
@@ -21,7 +22,7 @@ def app(request):
     return _app
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(autouse=True)
 def db(app, request):
     def teardown():
         _db.drop_all()

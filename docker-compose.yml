@@ -21,7 +21,7 @@ services:
       - 3000:3000
     volumes:
       - .:/code
-    command: /bin/bash -c "python -m flask run --port 3000 --host 0.0.0.0"
+    command: /bin/bash -c "flask run --port 3000 --host 0.0.0.0"
   db:
     container_name: banking-db
     image: postgres:10.0
