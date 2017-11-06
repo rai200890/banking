@@ -4,7 +4,6 @@ from decouple import config
 
 from banking.app import create_app, db as _db
 
-
 _app = create_app()
 
 

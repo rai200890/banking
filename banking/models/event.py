@@ -8,7 +8,8 @@ class EventType(db.Model):
     name = db.Column(db.String(80), unique=True, nullable=False, index=True)
     entity = db.Column(db.String(80), nullable=False, index=True)
     events = db.relationship("Event", back_populates="event_type")
-    subscribers = db.relationship("SubscriberEvent", back_populates="event_type")
+    subscribers = db.relationship("SubscriberEvent",
+                                  back_populates="event_type")
 
 
 class Event(db.Model):
