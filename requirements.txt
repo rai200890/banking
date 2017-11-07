@@ -1,11 +1,14 @@
-SQLAlchemy==1.1.14
+SQLAlchemy==1.1.15
 sqlalchemy_utils==0.32.19
 Babel==2.5.1
-psycopg2==2.7.3.1
+psycopg2==2.7.3.2
 Flask==0.12.2
 flasgger==0.8.0
-Flask-SQLAlchemy==2.3.1
+Flask-SQLAlchemy==2.3.2
 Flask-Migrate==2.1.1
 python-decouple==3.1
 celery==4.1.0
 redis==2.10.6
+passlib==1.7.1
+marshmallow==2.14.0
+webargs==1.8.1

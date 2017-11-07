@@ -5,6 +5,8 @@ services:
     environment:
        - LC_ALL=C.UTF-8
        - LANG=C.UTF-8
+       - FLASK_APP=banking/commands.py
+       - FLASK_DEBUG=1
     env_file: .env
     build: .
     depends_on:
@@ -19,7 +21,7 @@ services:
       - 3000:3000
     volumes:
       - .:/code
-    command: /bin/bash -c "FLASK_APP=run.py FLASK_DEBUG=1 python -m flask run --port 3000 --host 0.0.0.0"
+    command: /bin/bash -c "flask run --port 3000 --host 0.0.0.0"
   db:
     container_name: banking-db
     image: postgres:10.0
@@ -34,17 +36,3 @@ services:
     image: redis:latest
     ports:
       - 6379:6379
-  # queue:
-  #   container_name: banking-queue
-  #   image: rabbitmq:3-management
-  #   expose:
-  #     - 5672
-  #   hostname: banking-queue
-  #   ports:
-  #     - "8080:15672"
-  #     - "5672:5672"
-  #   network_mode: "bridge"
-  #   environment:
-  #     - RABBITMQ_ERLANG_COOKIE=secret
-  #     - RABBITMQ_DEFAULT_USER=root
-  #     - RABBITMQ_DEFAULT_PASS=root
