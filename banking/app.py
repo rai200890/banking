@@ -2,25 +2,20 @@ import logging
 from logging.config import fileConfig
 from os import getcwd
 
-from flask import Flask, g
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from decouple import config
 from flasgger import Swagger
-from werkzeug.local import LocalProxy
 
 db = SQLAlchemy()
 
 logger = logging.getLogger()
 
 
-def get_event_store():
-    from .eventsourcing.store import EventStore
-    event_store = getattr(g, "_event_store", None)
-    if event_store is None:
-        event_store = g._event_store = EventStore()
-
-
-event_store = LocalProxy(get_event_store)
+def handle_error(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.status_code
+    return response
 
 
 def create_app():

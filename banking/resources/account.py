@@ -19,18 +19,8 @@ class AccountResource(MethodView):
             "account": {
                 "id": entity.id,
                 "agency_id": entity.agency_id,
-                "client_id": entity.client_id
+                "client_id": entity.client_id,
+                "balance": entity.initial_balance,
+                "transactions": []
             }
         }), 201)
-
-    def get(self, id):
-        repository = AccountRepository()
-        entity = repository.get_entity(id)
-        return {
-            "account": {
-                "id": entity.id,
-                "agency_id": entity.agency_id,
-                "client_id": entity.client_id
-            },
-            "transactions": []
-        }
